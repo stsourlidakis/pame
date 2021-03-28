@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/stsourlidakis/pame/issues"
   },
-  "homepage": "https://github.com/stsourlidakis/pame#readme"
+  "homepage": "https://github.com/stsourlidakis/pame#readme",
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1"
+  }
 }
