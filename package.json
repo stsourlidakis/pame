@@ -1,32 +1,40 @@
 {
-  "name": "pame",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stsourlidakis/pame.git"
-  },
-  "keywords": [
-    "cli",
-    "open",
-    "links",
-    "browser",
-    "bookmarks"
-  ],
-  "author": "Stavros Tsourlidakis <s.tsourlidakis@hotmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/stsourlidakis/pame/issues"
-  },
-  "homepage": "https://github.com/stsourlidakis/pame#readme",
-  "devDependencies": {
-    "eslint": "^7.23.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1"
-  }
+	"name": "pame",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "rimraf ./dist && babel ./src --out-dir ./dist --copy-files --no-copy-ignored"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/stsourlidakis/pame.git"
+	},
+	"keywords": [
+		"cli",
+		"open",
+		"links",
+		"browser",
+		"bookmarks"
+	],
+	"author": "Stavros Tsourlidakis <s.tsourlidakis@hotmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/stsourlidakis/pame/issues"
+	},
+	"homepage": "https://github.com/stsourlidakis/pame#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.13.10",
+		"@babel/core": "^7.13.13",
+		"@babel/eslint-parser": "^7.13.10",
+		"@babel/preset-env": "^7.13.12",
+		"@babel/register": "^7.13.8",
+		"babel-preset-minify": "^0.5.1",
+		"eslint": "^7.23.0",
+		"eslint-config-prettier": "^8.1.0",
+		"eslint-plugin-prettier": "^3.3.1",
+		"prettier": "^2.2.1",
+		"rimraf": "^3.0.2"
+	}
 }

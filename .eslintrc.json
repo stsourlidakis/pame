@@ -4,6 +4,7 @@
 	},
 	"extends": ["eslint:recommended", "prettier"],
 	"plugins": ["prettier"],
+	"parser": "@babel/eslint-parser",
 	"rules": {
 		"prettier/prettier": "error"
 	}
