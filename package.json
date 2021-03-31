@@ -4,8 +4,9 @@
 	"description": "",
 	"main": "src/index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "rimraf ./dist && babel ./src --out-dir ./dist --copy-files --no-copy-ignored"
+		"test": "jest ./src",
+		"test:watch": "jest --watch ./src",
+		"build": "rimraf ./dist && babel ./src --out-dir ./dist --ignore '**/*.test.js' --copy-files --no-copy-ignored"
 	},
 	"repository": {
 		"type": "git",
@@ -34,7 +35,11 @@
 		"eslint": "^7.23.0",
 		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-prettier": "^3.3.1",
+		"jest": "^26.6.3",
 		"prettier": "^2.2.1",
 		"rimraf": "^3.0.2"
+	},
+	"dependencies": {
+		"open": "^8.0.4"
 	}
 }

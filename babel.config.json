@@ -9,6 +9,5 @@
 			}
 		],
 		"minify"
-	],
-	"ignore": ["**/*.test.js"]
+	]
 }
