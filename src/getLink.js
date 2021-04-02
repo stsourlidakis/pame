@@ -36,26 +36,24 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 
 	let extendedOption = configCopy[option]?._extend;
 	while (extendedOption) {
-		if (extendedOption) {
-			if (!configCopy[extendedOption]) {
-				throw new Error(
-					`Option "${extendedOption}" is not extendable because it doesn't exist`
-				);
-			}
-
-			if (!configCopy[extendedOption]._path) {
-				throw new Error(
-					`Option "${extendedOption}" is not extendable because it is a string`
-				);
-			}
-
-			delete configCopy[option]._extend;
-
-			configCopy[option] = {
-				...configCopy[extendedOption],
-				...configCopy[option],
-			};
+		if (!configCopy[extendedOption]) {
+			throw new Error(
+				`Option "${extendedOption}" is not extendable because it doesn't exist`
+			);
 		}
+
+		if (!configCopy[extendedOption]._path) {
+			throw new Error(
+				`Option "${extendedOption}" is not extendable because it is a string`
+			);
+		}
+
+		delete configCopy[option]._extend;
+
+		configCopy[option] = {
+			...configCopy[extendedOption],
+			...configCopy[option],
+		};
 
 		extendedOption = configCopy[option]?._extend;
 	}
