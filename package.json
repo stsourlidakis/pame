@@ -42,6 +42,9 @@
 		"rimraf": "^3.0.2"
 	},
 	"dependencies": {
-		"open": "^8.0.4"
+		"chalk": "^4.1.0",
+		"commander": "^4.1.1",
+		"open": "^8.0.4",
+		"open-editor": "^3.0.0"
 	}
 }
