@@ -3,6 +3,8 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "src/index.js",
+	"bin": "dist/index.js",
+	"preferGlobal": true,
 	"scripts": {
 		"test": "jest ./src",
 		"test:watch": "jest --watch ./src",
