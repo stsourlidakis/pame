@@ -59,7 +59,10 @@ class Pame {
 			}
 
 			this.log(link);
-			open(link);
+
+			if (!this.options.dryRun) {
+				open(link);
+			}
 			return;
 		} catch (error) {
 			this.logError(error.message);
@@ -101,7 +104,8 @@ program.version(version);
 
 program
 	.option('--config', 'Open the config file')
-	.option('--config-show', "Show the config's contents");
+	.option('--config-show', "Show the config's contents")
+	.option('--dry-run', 'Just print the url');
 
 program.parse(process.argv);
 
