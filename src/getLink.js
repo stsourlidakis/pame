@@ -12,9 +12,7 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 
 	// the first option should exist in the config
 	if (!configCopy[option] && pathSoFar === '') {
-		if (!configCopy[option]) {
-			throw new Error(`Option "${option}" doesn't exist`);
-		}
+		throw new Error(`Option "${option}" doesn't exist`);
 	}
 
 	// if the option starts with a "/" return it as is
