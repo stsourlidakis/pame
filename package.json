@@ -6,7 +6,7 @@
 	"bin": "dist/index.js",
 	"preferGlobal": true,
 	"scripts": {
-		"test": "jest ./src",
+		"test": "jest --collect-coverage ./src",
 		"test:watch": "jest --watch ./src",
 		"build": "rimraf ./dist && BABEL_ENV=production babel ./src --out-dir ./dist --ignore '**/*.test.js' --copy-files --no-copy-ignored"
 	},
