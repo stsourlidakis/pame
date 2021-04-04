@@ -43,7 +43,7 @@
 	},
 	"dependencies": {
 		"chalk": "^4.1.0",
-		"commander": "^4.1.1",
+		"commander": "^7.2.0",
 		"open": "^8.0.4",
 		"open-editor": "^3.0.0"
 	}
