@@ -7,7 +7,11 @@
 					"node": "current"
 				}
 			}
-		],
-		"minify"
-	]
+		]
+	],
+	"env": {
+		"production": {
+			"presets": ["minify"]
+		}
+	}
 }
