@@ -95,6 +95,25 @@ test('Supports chaining object->string after resolving _alias', () => {
 	expect(getLink(['b', 'c'], config)).toBe('https://a.com/c');
 });
 
+test('Resolves all available _alias options', () => {
+	const config = {
+		github: {
+			_path: 'https://github.com',
+			pulls: '/pulls',
+			pull: {
+				_alias: 'pulls',
+			},
+			pr: {
+				_alias: 'pull',
+			},
+			p: {
+				_alias: 'pr',
+			},
+		},
+	};
+	expect(getLink(['github', 'p'], config)).toBe('https://github.com/pulls');
+});
+
 test('Supports chaining object->object after resolving _alias', () => {
 	const config = {
 		a: {

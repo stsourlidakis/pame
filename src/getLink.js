@@ -20,16 +20,17 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 		return getLink(args.slice(1), configCopy, pathSoFar + option);
 	}
 
-	const alias = configCopy[option]?._alias;
-
-	if (alias) {
-		if (!configCopy[alias]) {
+	let aliasedOption = configCopy[option]?._alias;
+	while (aliasedOption) {
+		if (!configCopy[aliasedOption]) {
 			throw new Error(
-				`Option "${alias}" cannot be aliased because it doesn't exist`
+				`Option "${aliasedOption}" cannot be aliased because it doesn't exist`
 			);
 		}
 
-		option = alias;
+		option = aliasedOption;
+
+		aliasedOption = configCopy[option]?._alias;
 	}
 
 	let extendedOption = configCopy[option]?._extend;
