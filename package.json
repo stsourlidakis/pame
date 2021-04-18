@@ -1,8 +1,10 @@
 {
 	"name": "pame",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Construct and open links in your browser from the comfort of your terminal",
-	"bin": "dist/index.js",
+	"bin": {
+		"pame": "dist/index.js"
+	},
 	"preferGlobal": true,
 	"scripts": {
 		"test": "jest --collect-coverage ./src",
