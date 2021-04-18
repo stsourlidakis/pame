@@ -1,4 +1,4 @@
-# pame
+# pame [![codecov](https://codecov.io/gh/stsourlidakis/pame/branch/master/graph/badge.svg)](https://codecov.io/gh/stsourlidakis/pame)
 
 **Construct** and **open** links in your **browser** from the comfort of your terminal.
 
