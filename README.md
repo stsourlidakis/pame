@@ -1,4 +1,8 @@
-# pame [![codecov](https://codecov.io/gh/stsourlidakis/pame/branch/master/graph/badge.svg)](https://codecov.io/gh/stsourlidakis/pame)
+# pame
+
+[![version](https://img.shields.io/npm/v/pame?style=flat)](https://www.npmjs.com/package/pame)
+[![license](https://img.shields.io/npm/l/pame)](https://github.com/stsourlidakis/pame/blob/master/LICENSE)
+[![codecov](https://codecov.io/gh/stsourlidakis/pame/branch/master/graph/badge.svg)](https://codecov.io/gh/stsourlidakis/pame)
 
 **Construct** and **open** links in your **browser** from the comfort of your terminal.
 
@@ -266,3 +270,17 @@ pame foo
 pame foo bar
 # Opens https://foo.com/bar?lang=en
 ```
+
+## Options
+
+`--config`
+
+Prints the config path and opens the file if the `EDITOR` environment variable is set
+
+`--config-show`
+
+Prints you config
+
+`--dry-run`
+
+Prints the constructed url instead of printing and then opening in the browser.
