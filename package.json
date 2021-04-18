@@ -1,7 +1,7 @@
 {
 	"name": "pame",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Construct and open links in your browser from the comfort of your terminal",
 	"main": "src/index.js",
 	"bin": "dist/index.js",
 	"preferGlobal": true,
