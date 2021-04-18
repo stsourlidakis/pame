@@ -1,4 +1,6 @@
 const v8 = require('v8');
+const getClosest = require('./getClosest');
+const { reservedKeys } = require('./constants');
 
 module.exports = function getLink(args, config, pathSoFar = '') {
 	const configCopy = v8.deserialize(v8.serialize(config));
@@ -10,14 +12,24 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 
 	let option = args[0];
 
-	// the first option should exist in the config
-	if (!configCopy[option] && pathSoFar === '') {
-		throw new Error(`Option "${option}" doesn't exist`);
-	}
-
 	// if the option starts with a "/" return it as is
 	if (option.startsWith('/')) {
 		return getLink(args.slice(1), configCopy, pathSoFar + option);
+	}
+
+	// try to fix potential typos
+	if (!configCopy[option]) {
+		const validOptions = Object.keys(configCopy).filter(
+			(key) => !reservedKeys.includes(key)
+		);
+
+		option =
+			getClosest(option, validOptions, option.length > 3 ? 2 : 1) || option;
+	}
+
+	// the first option should exist in the config
+	if (!configCopy[option] && pathSoFar === '') {
+		throw new Error(`Option "${option}" doesn't exist`);
 	}
 
 	let aliasedOption = configCopy[option]?._alias;

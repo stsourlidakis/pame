@@ -232,6 +232,45 @@ pame google m
 
 ## Other features
 
+### Typo tolerance
+
+If your input doesn't match your config 100% `pame` will try the following in order to find a match:
+
+- Trim your input
+- Ignore case
+- [Deburr](https://lodash.com/docs/4.17.15#deburr) strings
+- Find matches with a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) of 1 or 2 (depending on the input's length)
+
+```json
+{
+	"github": "https://github.com"
+}
+```
+
+```sh
+pame gthub
+# Opens https://github.com
+
+pame gITHUB
+# Opens https://github.com
+```
+
+All arguments except the first one will be ignored if they can't be matched.
+
+```json
+{
+	"github": {
+		"_path": "https://github.com",
+		"pr": "/pulls"
+	}
+}
+```
+
+```sh
+pame github foo pr
+# Opens https://github.com/pulls
+```
+
 ### Dynamic sub-path (`/page`)
 
 You can append to the end of your url by starting an argument with a slash (`/`)

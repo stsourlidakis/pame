@@ -320,7 +320,7 @@ test('Throws an error when _alias references a non-existent option', () => {
 	);
 });
 
-test("Throws an error when when the first option doesn't exist", () => {
+test("Throws an error when when the first option can't be matched", () => {
 	const config = {
 		a: 'https://a.com',
 	};
@@ -337,6 +337,39 @@ test('Ignores non-existent options that are not in the start of the path', () =>
 		},
 	};
 	expect(getLink(['a', 'b', 'foo', 'bar'], config)).toBe('https://a.com/b');
+});
+
+test('Fixes minor typos in options', () => {
+	const config = {
+		github: {
+			_path: 'https://github.com',
+			pr: '/pulls',
+		},
+	};
+	expect(getLink(['githubb', 'pr'], config)).toBe('https://github.com/pulls');
+	expect(getLink(['ghub', 'p'], config)).toBe('https://github.com/pulls');
+});
+
+test('Fixes case in options', () => {
+	const config = {
+		github: {
+			_path: 'https://github.com',
+			pr: '/pulls',
+		},
+	};
+	expect(getLink(['GITHUB', 'pr'], config)).toBe('https://github.com/pulls');
+});
+
+test('Trims options', () => {
+	const config = {
+		github: {
+			_path: 'https://github.com',
+			pr: '/pulls',
+		},
+	};
+	expect(getLink(['  github    ', 'pr'], config)).toBe(
+		'https://github.com/pulls'
+	);
 });
 
 describe('README examples', () => {
@@ -490,5 +523,28 @@ describe('README examples', () => {
 		expect(getLink(['foo'], config)).toBe('https://foo.com?lang=en');
 
 		expect(getLink(['foo', 'bar'], config)).toBe('https://foo.com/bar?lang=en');
+	});
+
+	test('Typo tolerance', () => {
+		const config = {
+			github: 'https://github.com',
+		};
+
+		expect(getLink(['gthub'], config)).toBe('https://github.com');
+
+		expect(getLink(['gITHUB'], config)).toBe('https://github.com');
+	});
+
+	test('Ignored unmatched options', () => {
+		const config = {
+			github: {
+				_path: 'https://github.com',
+				pr: '/pulls',
+			},
+		};
+
+		expect(getLink(['github', 'foo', 'pr'], config)).toBe(
+			'https://github.com/pulls'
+		);
 	});
 });
