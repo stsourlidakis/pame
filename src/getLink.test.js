@@ -147,6 +147,24 @@ test('Supports _extend', () => {
 	expect(getLink(['b', 'd'], config)).toBe('https://b.com/d');
 });
 
+test('Supports deep level _extend', () => {
+	const config = {
+		a: {
+			_path: 'https://a.com',
+			b: {
+				_path: '/b',
+				c: '/c',
+			},
+			d: {
+				_path: '/d',
+				_extend: 'b',
+			},
+		},
+	};
+
+	expect(getLink(['a', 'd', 'c'], config)).toBe('https://a.com/d/c');
+});
+
 test('Retains new options with _extend', () => {
 	const config = {
 		a: {
