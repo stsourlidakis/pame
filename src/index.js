@@ -21,6 +21,7 @@ class Pame {
 		if (this.options.config) {
 			try {
 				openEditor([this.configPath]);
+				this.log(this.styleCode(this.configPath));
 			} catch (error) {
 				this.logError(error.message);
 				this.log(`You can find your config at: ${this.styleCode(this.configPath)}`);
