@@ -338,3 +338,157 @@ test('Ignores non-existent options that are not in the start of the path', () =>
 	};
 	expect(getLink(['a', 'b', 'foo', 'bar'], config)).toBe('https://a.com/b');
 });
+
+describe('README examples', () => {
+	test('Quick Overview', () => {
+		const config = {
+			npm: 'https://npmjs.com',
+			github: {
+				_path: 'https://github.com',
+				pr: '/pulls',
+			},
+			gh: {
+				_alias: 'github',
+			},
+			reddit: 'https://reddit.com/r',
+		};
+		expect(getLink(['npm'], config)).toBe('https://npmjs.com');
+		expect(getLink(['github'], config)).toBe('https://github.com');
+		expect(getLink(['github', 'pr'], config)).toBe('https://github.com/pulls');
+		expect(getLink(['gh'], config)).toBe('https://github.com');
+		expect(getLink(['gh', 'pr'], config)).toBe('https://github.com/pulls');
+		expect(getLink(['reddit', '/news'], config)).toBe(
+			'https://reddit.com/r/news'
+		);
+	});
+
+	test('Simple url - string', () => {
+		const config = { github: 'https://github.com' };
+		expect(getLink(['github'], config)).toBe('https://github.com');
+	});
+
+	test('Simple url - object', () => {
+		const config = {
+			github: {
+				_path: 'https://github.com',
+			},
+		};
+		expect(getLink(['github'], config)).toBe('https://github.com');
+	});
+
+	test('Url nesting', () => {
+		const config = {
+			github: {
+				_path: 'https://github.com',
+				pulls: '/pulls',
+			},
+		};
+		expect(getLink(['github', 'pulls'], config)).toBe('https://github.com/pulls');
+	});
+
+	test('Url deep nesting', () => {
+		const config = {
+			github: {
+				_path: 'https://github.com',
+				pulls: {
+					_path: '/pulls',
+					m: '/mentioned',
+					a: '/assigned',
+				},
+			},
+		};
+
+		expect(getLink(['github', 'pulls', 'm'], config)).toBe(
+			'https://github.com/pulls/mentioned'
+		);
+
+		expect(getLink(['github', 'pulls', 'a'], config)).toBe(
+			'https://github.com/pulls/assigned'
+		);
+	});
+
+	test('Alias', () => {
+		const config = {
+			github: {
+				_path: 'https://github.com',
+				pulls: '/pulls',
+			},
+			gh: {
+				_alias: 'github',
+			},
+		};
+
+		expect(getLink(['gh'], config)).toBe('https://github.com');
+
+		expect(getLink(['gh', 'pulls'], config)).toBe('https://github.com/pulls');
+	});
+
+	test('Alias - multiple/nested', () => {
+		const config = {
+			github: {
+				_path: 'https://github.com',
+				pulls: '/pulls',
+				pr: {
+					_alias: 'pulls',
+				},
+				p: {
+					_alias: 'pulls',
+				},
+			},
+			gh: {
+				_alias: 'github',
+			},
+		};
+
+		expect(getLink(['github', 'pr'], config)).toBe('https://github.com/pulls');
+
+		expect(getLink(['github', 'p'], config)).toBe('https://github.com/pulls');
+
+		expect(getLink(['gh', 'p'], config)).toBe('https://github.com/pulls');
+	});
+
+	test('Extend', () => {
+		const config = {
+			ddg: {
+				_path: 'https://duckduckgo.com',
+				i: '/images',
+			},
+			google: {
+				_path: 'https://google.com',
+				_extend: 'ddg',
+				m: '/maps',
+			},
+		};
+
+		expect(getLink(['google'], config)).toBe('https://google.com');
+
+		expect(getLink(['google', 'i'], config)).toBe('https://google.com/images');
+
+		expect(getLink(['google', 'm'], config)).toBe('https://google.com/maps');
+	});
+
+	test('Dynamic sub-path', () => {
+		const config = { reddit: 'https://reddit.com/r' };
+
+		expect(getLink(['reddit', '/news'], config)).toBe(
+			'https://reddit.com/r/news'
+		);
+
+		expect(getLink(['reddit', '/gifs'], config)).toBe(
+			'https://reddit.com/r/gifs'
+		);
+	});
+
+	test('Query string', () => {
+		const config = {
+			foo: {
+				_path: 'https://foo.com?lang=en',
+				bar: '/bar',
+			},
+		};
+
+		expect(getLink(['foo'], config)).toBe('https://foo.com?lang=en');
+
+		expect(getLink(['foo', 'bar'], config)).toBe('https://foo.com/bar?lang=en');
+	});
+});
