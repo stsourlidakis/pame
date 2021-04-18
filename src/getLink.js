@@ -76,7 +76,7 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 	const value = configCopy[option]._path || configCopy[option];
 
 	if (args.length === 1) {
-		return moveQueryParams(pathSoFar + value);
+		return moveQueryParams(removeExtraSlashes(pathSoFar + value));
 	}
 
 	return getLink(args.slice(1), configCopy[option], pathSoFar + value);
@@ -90,4 +90,8 @@ function moveQueryParams(path) {
 	}
 
 	return path;
+}
+
+function removeExtraSlashes(path) {
+	return path.replace(/(?<!(http:|https:))\/\//g, '/');
 }

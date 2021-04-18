@@ -372,6 +372,16 @@ test('Trims options', () => {
 	);
 });
 
+test('Removes extra slashes (/)', () => {
+	const config = {
+		github: {
+			_path: 'https://github.com/',
+			pr: '/pulls',
+		},
+	};
+	expect(getLink(['github', 'pr'], config)).toBe('https://github.com/pulls');
+});
+
 describe('README examples', () => {
 	test('Quick Overview', () => {
 		const config = {
