@@ -8,8 +8,12 @@
 	"scripts": {
 		"test": "jest --collect-coverage ./src",
 		"test:watch": "jest --watch ./src",
-		"build": "rimraf ./dist && BABEL_ENV=production babel ./src --out-dir ./dist --ignore '**/*.test.js' --copy-files --no-copy-ignored"
+		"build": "rimraf ./dist && BABEL_ENV=production babel ./src --out-dir ./dist --ignore '**/*.test.js' --copy-files --no-copy-ignored",
+		"prepare": "npm run build"
 	},
+	"files": [
+		"dist"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/stsourlidakis/pame.git"
