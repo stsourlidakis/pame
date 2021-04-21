@@ -5,7 +5,7 @@ const commander = require('commander');
 const chalk = require('chalk');
 const open = require('open');
 const openEditor = require('open-editor');
-const getLink = require('./getLink');
+const getLink = require('./utils/getLink');
 const { version } = require('../package.json');
 
 class Pame {

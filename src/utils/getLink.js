@@ -1,6 +1,6 @@
 const v8 = require('v8');
 const getClosest = require('./getClosest');
-const { reservedKeys } = require('./constants');
+const { reservedKeys } = require('../constants');
 
 module.exports = function getLink(args, config, pathSoFar = '') {
 	const configCopy = v8.deserialize(v8.serialize(config));
