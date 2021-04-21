@@ -10,7 +10,7 @@
 
 ## Do I need this?
 
-If you tick some of the boxes bellow, `pame` will probably save you some time
+If you tick some of the boxes below, `pame` will probably save you some time
 
 - You spend time in your terminal
 - You often need to open the same or slightly different urls (aws/gcp pages, dashboards, documentation, repositories etc)
