@@ -54,10 +54,14 @@ test('Moves query params at the end of the url', () => {
 	const config = {
 		a: {
 			_path: 'https://a.com?foo=bar',
-			b: '/b',
+			b: {
+				_path: '/b',
+				c: '/c',
+			},
 		},
 	};
-	expect(getLink(['a', 'b'], config)).toBe('https://a.com/b?foo=bar');
+
+	expect(getLink(['a', 'b', '/c'], config)).toBe('https://a.com/b/c?foo=bar');
 });
 
 test('Supports _alias on string values', () => {

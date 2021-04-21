@@ -1,5 +1,6 @@
 const v8 = require('v8');
 const getClosest = require('./getClosest');
+const moveQueryParams = require('./moveQueryParams');
 const { reservedKeys } = require('../constants');
 
 module.exports = function getLink(args, config, pathSoFar = '') {
@@ -81,16 +82,6 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 
 	return getLink(args.slice(1), configCopy[option], pathSoFar + value);
 };
-
-function moveQueryParams(path) {
-	const [, queryParams] = path.match(/(\?.*)(?:\/)(?:.+$)/) || [];
-
-	if (queryParams) {
-		path = path.replace(queryParams, '') + queryParams;
-	}
-
-	return path;
-}
 
 function removeExtraSlashes(path) {
 	return path.replace(/(?<!(http:|https:))\/\//g, '/');
