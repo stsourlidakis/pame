@@ -27,6 +27,11 @@ npm i pame -g
 
 You can create a JSON config with pages you want to open with `pame`.
 
+![Overview config](./media/overview-config.png) ![Overview terminal](./media/overview-terminal.png)
+
+<details>
+  <summary>Show quick overview code</summary>
+
 ```json
 // ~/.pame.config.json
 {
@@ -61,6 +66,8 @@ pame gh pr
 pame reddit /news
 # Opens https://reddit.com/r/news
 ```
+
+</details>
 
 ## Configuration
 
