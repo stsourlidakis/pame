@@ -20,7 +20,7 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 	}
 
 	// try to fix potential typos
-	if (!configCopy[option]) {
+	if (!configCopy[option] && typeof configCopy === 'object') {
 		const validOptions = Object.keys(configCopy).filter(
 			(key) => !reservedKeys.includes(key)
 		);
