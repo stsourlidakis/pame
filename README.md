@@ -3,6 +3,7 @@
 [![version](https://img.shields.io/npm/v/pame?style=flat)](https://www.npmjs.com/package/pame)
 [![license](https://img.shields.io/npm/l/pame)](https://github.com/stsourlidakis/pame/blob/master/LICENSE)
 [![codecov](https://codecov.io/gh/stsourlidakis/pame/branch/master/graph/badge.svg)](https://codecov.io/gh/stsourlidakis/pame)
+[![changelog](https://shields.io/badge/-Changelog-informational)](CHANGELOG.md)
 
 **Construct** and **open** links in your **browser** from the comfort of your terminal.
 
@@ -35,7 +36,6 @@ You can create a JSON config with pages you want to open with `pame`.
 ```json
 // ~/.pame.config.json
 {
-	"npm": "https://npmjs.com",
 	"github": {
 		"_path": "https://github.com",
 		"pr": "/pulls"
@@ -43,14 +43,12 @@ You can create a JSON config with pages you want to open with `pame`.
 	"gh": {
 		"_alias": "github"
 	},
-	"reddit": "https://reddit.com/r"
+	"reddit": "https://reddit.com/r",
+	"npm": "https://www.npmjs.com/search?q={*}"
 }
 ```
 
 ```sh
-pame npm
-# Opens https://npmjs.com
-
 pame github
 # Opens https://github.com
 
@@ -65,9 +63,22 @@ pame gh pr
 
 pame reddit /news
 # Opens https://reddit.com/r/news
+
+pame npm testing
+# Opens https://www.npmjs.com/search?q=testing
 ```
 
 </details>
+
+## Main features ✨
+
+- [Sub-pages](#url-nesting)
+- [Query params placeholders](#query-params-placeholders)
+- [Typo tolerance](#typo-tolerance)
+- [Dynamic sub-pages](#dynamic-sub-paths)
+- [Flexible query string](#query-string)
+- [Aliases](#aliases)
+- [Extension of existing pages](#extending-configurations)
 
 ## Configuration
 
@@ -190,7 +201,7 @@ pame translate
 # Opens https://translate.google.com/?sl=en&tl=el
 ```
 
-### Aliases (`_alias`)
+### Aliases
 
 You can create **same level** aliases by using `_alias`, nested paths and other features will still work!
 
@@ -245,7 +256,7 @@ pame gh p
 # Opens https://github.com/pulls
 ```
 
-### Extending configurations (`_extend`)
+### Extending configurations
 
 Url configs can inherit sub-pages with `_extend`.
 
@@ -315,7 +326,7 @@ pame github foo pr
 # Opens https://github.com/pulls
 ```
 
-### Dynamic sub-path (`/page`)
+### Dynamic sub-paths
 
 You can append to the end of your url by starting an argument with a slash (`/`)
 
