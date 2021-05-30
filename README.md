@@ -153,6 +153,43 @@ pame github pulls a
 # Opens https://github.com/pulls/assigned
 ```
 
+### Query Params placeholders
+
+Query params can have placeholder values which can be replaced when constructing the url by starting an argument with a `*` or by providing a string that doesn't match any sub-path.
+
+- simple placeholder: `?lang={*}`
+- with default value: `?lang={*en}`
+
+Unused placeholders with no default value will be removed from the final url.
+
+```json
+{
+	"npm": "https://www.npmjs.com/search?q={*}",
+	"translate": "https://translate.google.com/?text={*}&sl={*en}&tl={*el}"
+}
+```
+
+The following examples will also work without starting the arguments with a `*` since they do not match any sub-paths.
+
+```sh
+pame npm *testing
+# OR
+pame npm testing
+# Opens https://www.npmjs.com/search?q=testing
+
+pame translate *hello
+# Opens https://translate.google.com/?text=hello&sl=en&tl=el
+
+pame translate *hola *es *en
+# Opens https://translate.google.com/?text=hola&sl=es&tl=en
+
+pame translate *"hello there"
+# Opens https://translate.google.com/?text=hello%20there&sl=en&tl=el
+
+pame translate
+# Opens https://translate.google.com/?sl=en&tl=el
+```
+
 ### Aliases (`_alias`)
 
 You can create **same level** aliases by using `_alias`, nested paths and other features will still work!
@@ -262,7 +299,7 @@ pame gITHUB
 # Opens https://github.com
 ```
 
-All arguments except the first one will be ignored if they can't be matched.
+All arguments except the first one will be ignored if they can't be matched and they can't be used as a [query param placeholde](#query-params-placeholders) value.
 
 ```json
 {

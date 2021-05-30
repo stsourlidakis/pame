@@ -2,6 +2,8 @@ const v8 = require('v8');
 const getClosest = require('./getClosest');
 const moveQueryParams = require('./moveQueryParams');
 const removeExtraSlashes = require('./removeExtraSlashes');
+const replacePlaceholderQueryParam = require('./replacePlaceholderQueryParam');
+const handleUnusedQueryParamPlaceholders = require('./handleUnusedQueryParamPlaceholders');
 const { reservedKeys } = require('../constants');
 
 module.exports = function getLink(args, config, pathSoFar = '') {
@@ -9,7 +11,7 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 
 	// if there are no args, return
 	if (args.length === 0) {
-		return moveQueryParams(pathSoFar);
+		return normalizeLink(pathSoFar);
 	}
 
 	let option = args[0];
@@ -17,6 +19,15 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 	// if the option starts with a "/" return it as is
 	if (option.startsWith('/')) {
 		return getLink(args.slice(1), configCopy, pathSoFar + option);
+	}
+
+	// if the option starts with a "*" use it in the next query param placeholder
+	if (option.startsWith('*')) {
+		return getLink(
+			args.slice(1),
+			configCopy,
+			replacePlaceholderQueryParam(pathSoFar, option.slice(1))
+		);
 	}
 
 	// try to fix potential typos
@@ -71,15 +82,32 @@ module.exports = function getLink(args, config, pathSoFar = '') {
 		extendedOption = configCopy[option]?._extend;
 	}
 
+	// if the option can't be matched with anything use it as query param placeholder value
 	if (!configCopy[option]) {
-		return getLink(args.slice(1), configCopy, pathSoFar);
+		return getLink(
+			args.slice(1),
+			configCopy,
+			replacePlaceholderQueryParam(pathSoFar, option)
+		);
 	}
 
 	const value = configCopy[option]._path || configCopy[option];
 
 	if (args.length === 1) {
-		return moveQueryParams(removeExtraSlashes(pathSoFar + value));
+		return normalizeLink(pathSoFar + value);
 	}
 
 	return getLink(args.slice(1), configCopy[option], pathSoFar + value);
 };
+
+function normalizeLink(link) {
+	// Order matters
+	const funcs = [
+		removeExtraSlashes,
+		moveQueryParams,
+		handleUnusedQueryParamPlaceholders,
+		encodeURI,
+	];
+
+	return funcs.reduce((updatedLink, func) => func(updatedLink), link);
+}

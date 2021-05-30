@@ -386,6 +386,55 @@ test('Removes extra slashes (/)', () => {
 	expect(getLink(['github', 'pr'], config)).toBe('https://github.com/pulls');
 });
 
+test('Encodes final URL', () => {
+	const config = {
+		a: 'https://a.com/?a=b c&pame=πάμε',
+	};
+	expect(getLink(['a'], config)).toBe(
+		encodeURI('https://a.com/?a=b c&pame=πάμε')
+	);
+});
+
+describe('Query params placeholders', () => {
+	test('Replaces query params placeholders with the provided value', () => {
+		const config = {
+			a: 'https://a.com/?b={*}',
+		};
+		expect(getLink(['a', '*c'], config)).toBe('https://a.com/?b=c');
+	});
+
+	test('Replaces query params placeholders with the provided value on nested paths', () => {
+		const config = {
+			a: {
+				_path: 'https://a.com',
+				b: '/b?c={*}',
+			},
+		};
+		expect(getLink(['a', 'b', '*d'], config)).toBe('https://a.com/b?c=d');
+	});
+
+	test('Replaces query params placeholders with their default value', () => {
+		const config = {
+			a: 'https://a.com/?b={*c}',
+		};
+		expect(getLink(['a'], config)).toBe('https://a.com/?b=c');
+	});
+
+	test('Removes unused query params placeholders', () => {
+		const config = {
+			a: 'https://a.com/?b={*}',
+		};
+		expect(getLink(['a'], config)).toBe('https://a.com/');
+	});
+
+	test('Uses unmatched options as query params placeholder values if possible', () => {
+		const config = {
+			a: 'https://a.com/?b={*}',
+		};
+		expect(getLink(['a', 'c'], config)).toBe('https://a.com/?b=c');
+	});
+});
+
 describe('README examples', () => {
 	test('Quick Overview', () => {
 		const config = {
@@ -559,6 +608,37 @@ describe('README examples', () => {
 
 		expect(getLink(['github', 'foo', 'pr'], config)).toBe(
 			'https://github.com/pulls'
+		);
+	});
+
+	test('Query params placeholders', () => {
+		const config = {
+			npm: 'https://www.npmjs.com/search?q={*}',
+			translate: 'https://translate.google.com/?text={*}&sl={*en}&tl={*el}',
+		};
+
+		expect(getLink(['npm', '*testing'], config)).toBe(
+			'https://www.npmjs.com/search?q=testing'
+		);
+
+		expect(getLink(['npm', 'testing'], config)).toBe(
+			getLink(['npm', '*testing'], config)
+		);
+
+		expect(getLink(['translate', '*hola', '*es', '*en'], config)).toBe(
+			'https://translate.google.com/?text=hola&sl=es&tl=en'
+		);
+
+		expect(getLink(['translate', '*hello'], config)).toBe(
+			'https://translate.google.com/?text=hello&sl=en&tl=el'
+		);
+
+		expect(getLink(['translate', '*hello there'], config)).toBe(
+			'https://translate.google.com/?text=hello%20there&sl=en&tl=el'
+		);
+
+		expect(getLink(['translate'], config)).toBe(
+			'https://translate.google.com/?sl=en&tl=el'
 		);
 	});
 });
