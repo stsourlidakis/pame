@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.1 - 2021-06-27
+
+- Updated dependencies
+
 ## v1.2.0 - 2021-05-30
 
 - Fixed a bug in typo tolerance functionality
