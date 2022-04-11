@@ -1,6 +1,6 @@
 {
 	"name": "pame",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "Construct and open links in your browser from the comfort of your terminal",
 	"bin": {
 		"pame": "dist/index.js"
