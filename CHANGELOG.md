@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.2 - 2022-04-11
+
+- Updated dependencies
+- Updated 2nd level dependencies with security issues
+
 ## v1.2.1 - 2021-06-27
 
 - Updated dependencies
