@@ -48,7 +48,7 @@
 	},
 	"dependencies": {
 		"chalk": "^4.1.0",
-		"commander": "^7.2.0",
+		"commander": "^9.1.0",
 		"didyoumean2": "^5.0.0",
 		"open": "^8.4.0",
 		"open-editor": "^3.0.0",
